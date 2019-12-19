@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Youtube DL</title>
+
+        <style media="screen" type="text/css">
+            * {
+                box-sizing: border-box;
+            }
+
+            html,
+            body {
+                font-family: -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    Roboto,
+                    "Helvetica Neue",
+                    Arial,
+                    sans-serif;
+
+                width: 100vw;
+                height: 100vh;
+            }
+
+            .center {
+                width: 35vh;
+
+                margin: 10vh auto 0;
+            }
+
+            input {
+                border: none;
+
+                border: 1px solid #e5e5e5;
+
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+
+            button {
+                cursor: pointer;
+
+                border: none;
+
+                width: 100%;
+                padding: 10px;
+
+                font-weigth: 700;
+
+                color: #252422;
+                background: #1e87f0;
+            }
+
+            label {
+                font-size: 0.9rem;
+            }
+            select {
+                display: block;
+
+                font-family: sans-serif;
+                font-weight: 700;
+
+                padding: 8px 15px;
+                width: 100%;
+                max-width: 100%;
+
+                border: 1px solid #e5e5e5;
+            }
+        </style>
+
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', () => {
+                const
+                    inputElement = document.querySelector('.center > input'),
+                    selectElement = document.querySelector('.center > select'),
+                    buttonElement = document.querySelector('.center > button');
+
+                buttonElement.addEventListener('click', function() {
+                    try {
+                        const url = new URL(inputElement.value);
+
+                        if (url.hostname != 'www.youtube.com' && url.hostname != 'youtube.com') {
+                            alert('Please use a YouTube url.');
+
+                            return;
+                        }
+                    } catch (e) {
+                        alert('Valid URL is required');
+
+                        return;
+                    }
+
+                    const
+                        v = (new URLSearchParams(inputElement.value.split('?')[1])).get('v'),
+                        dlUrl = `https://ytdl.pieceof.art/dl?v=${v}&dltype=${selectElement.value}`,
+                        dlElement = document.createElement('a');
+
+                    inputElement.value = '';
+
+                    dlElement.setAttribute('href', dlUrl);
+                    dlElement.setAttribute('hidden', '');
+
+                    document.querySelector('html').append(dlElement);
+
+                    dlElement.click();
+                    dlElement.remove();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="center">
+            <h1>YouTube downloader</h1>
+            <input type="text" name="" value="" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            <label for="quality">Select Download Type:</label>
+            <select class="" name="quality">
+                <option value="0" selected>Video HQ</option>
+                <option value="1">Video LQ</option>
+                <option value="2">Audio</option>
+            </select>
+            <button type="button" name="button">Download</button>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "ytdl-endpoint",
+  "version": "1.0.0",
+  "description": "API endpoint that returns a stream url",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yimura",
+  "license": "MIT",
+  "dependencies": {
+    "ytdl-core": "^1.0.3"
+  }
+}
