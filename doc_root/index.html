@@ -21,6 +21,8 @@
 
                 width: 100vw;
                 height: 100vh;
+
+                overflow: hidden;
             }
 
             .center {
@@ -94,7 +96,7 @@
 
                     const
                         v = (new URLSearchParams(inputElement.value.split('?')[1])).get('v'),
-                        dlUrl = `https://ytdl.pieceof.art/dl?v=${v}&dltype=${selectElement.value}`,
+                        dlUrl = `${window.location.origin}/dl?v=${v}&dltype=${selectElement.value}`,
                         dlElement = document.createElement('a');
 
                     inputElement.value = '';
@@ -113,11 +115,11 @@
     <body>
         <div class="center">
             <h1>YouTube downloader</h1>
-            <input type="text" name="" value="" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            <input type="text" value="" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
             <label for="quality">Select Download Type:</label>
             <select class="" name="quality">
-                <option value="0" selected>Video HQ</option>
-                <option value="1">Video LQ</option>
+                <option value="0" selected>Video HD (720p)</option>
+                <option value="1">Video SD</option>
                 <option value="2">Audio</option>
             </select>
             <button type="button" name="button">Download</button>
