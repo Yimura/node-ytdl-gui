@@ -1,14 +1,18 @@
 {
-  "name": "ytdl-endpoint",
-  "version": "1.0.0",
+  "name": "ytdl-web-gui",
+  "version": "0.1.0",
   "description": "API endpoint that returns a stream url",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "docker build --tag ytdl:test_build . && docker rm ytdl -f && docker run --init --name ytdl -p 8080:8080 ytdl:test_build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Yimura",
   "license": "MIT",
   "dependencies": {
-    "ytdl-core": "^1.0.3"
+    "@yimura/import-dir": "^0.1.7",
+    "fluent-ffmpeg": "^2.1.2",
+    "youtube-dl": "^3.0.2"
   }
 }
