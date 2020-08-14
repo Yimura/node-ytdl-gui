@@ -1,5 +1,5 @@
 # YouTube Downloader
-Project to download YouTube videos in Audio or Video formats
+Download YTDL supported Video's and convert them to audio if you want to.
 
 ## Requirements
 
@@ -11,6 +11,12 @@ Project to download YouTube videos in Audio or Video formats
 ```sh
 npm install
 ```
+
+## Config
+
+By default, the webserver will be clustered in the same amount of Logical Cores available. You can overwrite the automated mode and set the amount of threads the webserver should use.
+
+Modify the `data/config.js` file and look for cluster.threads and modify this with the number of threads you would like to use, for personal use you have more than enough with one thread.
 
 ## Docker
 
