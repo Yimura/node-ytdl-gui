@@ -1,4 +1,7 @@
 export default {
+    cluster: {
+        threads: 'auto'
+    },
     web: {
         port: 8080,
         allow_headers: [

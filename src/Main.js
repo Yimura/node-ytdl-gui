@@ -21,7 +21,8 @@ export default class Main {
         if (cluster.isMaster) {
             log.info('MASTER', `Master Cluster is started on PID ${process.pid}`);
 
-            for (let i = 0; i < cpus().length; i++) {
+            const threads = config.cluster.threads === 'auto' ? cpus().length : config.cluster.threads;
+            for (let i = 0; i < threads; i++) {
                 cluster.fork();
             }
 
