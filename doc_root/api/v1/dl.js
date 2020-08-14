@@ -14,6 +14,17 @@ export default class Download extends BasicEndpoint {
         return this.getModule('ffmpeg');
     }
 
+    /**
+     * @param {Request} request
+     * @param {fs.readableStream} stream
+     */
+    _endStream(request, stream) {
+        stream.destroy();
+        stream.removeAllListeners();
+
+        request.end();
+    }
+
     _replaceExtension(fileName, newExt) {
         const ext = extname(fileName);
         return fileName.replace(ext, newExt);
@@ -101,16 +112,13 @@ export default class Download extends BasicEndpoint {
 
                 log.error('API_DL', 'Error occured with stream:', err);
             });
-            stream.once('end', () => {
-                stream.removeAllListeners();
-                request.end();
-            });
+            stream.once('end', () => this._endStream(request, stream));
         });
 
         stream.on('error', (err) => {
             log.error('API_DL', 'Error occured with stream:', err);
         });
-        stream.on('end', () => stream.removeAllListeners());
+        stream.once('end', () => this._endStream(request, stream));
 
         return true;
     }
