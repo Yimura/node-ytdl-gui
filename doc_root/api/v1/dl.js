@@ -17,12 +17,13 @@ export default class Download extends BasicEndpoint {
     /**
      * @param {Request} request
      * @param {fs.readableStream} stream
+     * @param {string} reason
      */
-    _endStream(request, stream) {
+    _endStream(request, stream, reason) {
         stream.destroy();
         stream.removeAllListeners();
 
-        request.end();
+        request.end(reason);
     }
 
     _replaceExtension(fileName, newExt) {
@@ -42,6 +43,14 @@ export default class Download extends BasicEndpoint {
         let fileSize;
 
         switch (type) {
+            case 3: {
+                contentType = 'audio/wav';
+                fileName = this._replaceExtension(info._filename, '.wav');
+
+                stream = this.ffmpeg.toAudio(stream, 'wav');
+
+                break;
+            }
             case 2: {
                 contentType = 'audio/ogg';
                 fileName = this._replaceExtension(info._filename, '.ogg');
@@ -108,15 +117,17 @@ export default class Download extends BasicEndpoint {
             request.writeHead(200, headers);
             stream.on('data', (data) => request.write(data));
             stream.on('error', (err) => {
-                stream.destroy();
-
                 log.error('API_DL', 'Error occured with stream:', err);
+
+                this._endStream(request, stream, 'An error occured while getting the stream.');
             });
             stream.once('end', () => this._endStream(request, stream));
         });
 
         stream.on('error', (err) => {
             log.error('API_DL', 'Error occured with stream:', err);
+
+            this._endStream(request, stream, 'An error occured while getting the stream.');
         });
         stream.once('end', () => this._endStream(request, stream));
 
