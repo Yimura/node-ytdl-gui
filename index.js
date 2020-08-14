@@ -1,5 +1,8 @@
-const
-    WebServer = require('./lib/webserver.js'),
-    webServer = new WebServer();
+import Main from './src/Main.js'
 
-webServer.startServer();
+const main = new Main();
+
+process.on('SIGINT', () => main.exit());
+process.on('SIGTERM', () => main.exit());
+
+process.on('unhandledRejection', console.log);
