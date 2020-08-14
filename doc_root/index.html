@@ -80,23 +80,8 @@
                     buttonElement = document.querySelector('.center > button');
 
                 buttonElement.addEventListener('click', function() {
-                    try {
-                        const url = new URL(inputElement.value);
-
-                        if (url.hostname != 'www.youtube.com' && url.hostname != 'youtube.com') {
-                            alert('Please use a YouTube url.');
-
-                            return;
-                        }
-                    } catch (e) {
-                        alert('Valid URL is required');
-
-                        return;
-                    }
-
                     const
-                        v = (new URLSearchParams(inputElement.value.split('?')[1])).get('v'),
-                        dlUrl = `${window.location.origin}/dl?v=${v}&dltype=${selectElement.value}`,
+                        dlUrl = `${window.location.origin}/api/v1/dl/?url=${encodeURIComponent(inputElement.value)}&type=${selectElement.value}`,
                         dlElement = document.createElement('a');
 
                     inputElement.value = '';
@@ -119,8 +104,8 @@
             <label for="quality">Select Download Type:</label>
             <select class="" name="quality">
                 <option value="0" selected>Video HD (720p)</option>
-                <option value="1">Video SD</option>
-                <option value="2">Audio</option>
+                <option value="1">Audio (mp3)</option>
+                <option value="2">Audio (ogg)</option>
             </select>
             <button type="button" name="button">Download</button>
         </div>
