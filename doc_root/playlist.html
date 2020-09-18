@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Download Playlist</title>
+
+        <link rel="stylesheet" href="assets/css/master.css">
+
+        <script src="assets/js/Playlist.js" type="module" charset="utf-8"></script>
+    </head>
+    <body>
+        <div class="center">
+            <h1>Download a playlist from YouTube</h1>
+            <input type="text" value="" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+            <label for="quality">Select Download Type:</label>
+            <select id="quality" class="" name="quality">
+                <option value="0" selected>Video (Best Available)</option>
+                <option value="1">Audio (mp3)</option>
+                <option value="2">Audio (ogg)</option>
+                <option value="3">Audio (wav)</option>
+            </select>
+            <button type="button" name="button">Load Playlist</button>
+            <section id="playlist" hidden>
+                <h1></h1>
+                <ul>
+
+                </ul>
+            </section>
+        </div>
+    </body>
+</html>
