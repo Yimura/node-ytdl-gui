@@ -2,10 +2,10 @@ export default {
     cluster: {
         threads: 1
     },
-    settings: {
+    downloads: {
         sites: {
             rule: 'allow',
-            exception: []
+            exception: [ 'www.youtube.com' ]
         }
     },
     web: {
