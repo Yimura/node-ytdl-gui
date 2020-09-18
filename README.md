@@ -22,7 +22,7 @@ export default {
     cluster: {
         // By default, the webserver will be clustered in the same amount of Logical Cores available.
         // You can overwrite the automated mode and set the amount of threads the webserver should use.
-        threads: 'auto'
+        threads: 'auto' // a number is expected or "auto"
     },
     downloads: {
         sites: {
@@ -35,7 +35,10 @@ export default {
         }
     },
     web: {
+        // Change the port of the web server, don't change this for the docker container as you'll have to adapt it there as well.
         port: 8080,
+
+        // All of the below are advanced options and should only be modified if you know what you are doing.
         allow_headers: [
             'Authorization',
             'Access-Control-Allow-Headers',
