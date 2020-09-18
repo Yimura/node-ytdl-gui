@@ -1,6 +1,12 @@
 export default {
     cluster: {
-        threads: 'auto'
+        threads: 1
+    },
+    settings: {
+        sites: {
+            rule: 'allow',
+            exception: []
+        }
     },
     web: {
         port: 8080,
