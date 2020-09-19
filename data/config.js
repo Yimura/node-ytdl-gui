@@ -5,7 +5,7 @@ export default {
     downloads: {
         sites: {
             rule: 'allow',
-            exception: [ 'www.youtube.com' ]
+            exception: []
         }
     },
     web: {
