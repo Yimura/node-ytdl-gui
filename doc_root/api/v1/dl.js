@@ -95,6 +95,7 @@ export default class Download extends BasicEndpoint {
         }
 
         const url = data.get('url');
+        
         // Check if the host is allowed to be downloaded from, if not return 403
         const host = new URL(url).hostname;
         if (!this.getModule('settings').isDomainOk(host)) return request.reject(403);
