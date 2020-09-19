@@ -15,7 +15,7 @@ export default class Settings extends BaseModule {
     isDomainOk(domain) {
         const sites = this.config.downloads.sites;
 
-        return sites.rule === 'allow' & !sites.exception.includes(domain);
+        return sites.exception.includes(domain) ? sites.rule !== 'allow' : sites.rule === 'allow';
     }
 
     setup() {
