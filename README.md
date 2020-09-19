@@ -14,7 +14,7 @@ npm install
 
 ## Config
 
-For personal use one thread is what you're best of setting, as it is nearly impossible to use more than one.
+For personal use one thread is what you're best off setting, as it is nearly impossible to use more than one.
 ffmpeg will is optimised to take advantage of multiple threads, so changing this setting will not affect ffmpeg.
 
 ```js
