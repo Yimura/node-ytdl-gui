@@ -2,47 +2,53 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Youtube DL</title>
+        <title>Download Video/Audio from websites.</title>
 
+        <link rel="stylesheet" href="assets/css/skeleton.min.css">
         <link rel="stylesheet" href="assets/css/master.css">
 
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', () => {
-                const
-                    inputElement = document.querySelector('.center > input'),
-                    selectElement = document.querySelector('.center > select'),
-                    buttonElement = document.querySelector('.center > button');
-
-                buttonElement.addEventListener('click', function() {
-                    const
-                        dlUrl = `${window.location.origin}/api/v1/dl/?url=${encodeURIComponent(inputElement.value)}&type=${selectElement.value}`,
-                        dlElement = document.createElement('a');
-
-                    inputElement.value = '';
-
-                    dlElement.setAttribute('href', dlUrl);
-                    dlElement.setAttribute('hidden', '');
-
-                    document.querySelector('html').append(dlElement);
-
-                    dlElement.click();
-                    dlElement.remove();
-                });
-            });
-        </script>
+        <script src="assets/js/index.js" type="module" charset="utf-8"></script>
     </head>
     <body>
-        <div class="center">
-            <h1>YouTube downloader</h1>
-            <input type="text" value="" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-            <label for="quality">Select Download Type:</label>
-            <select class="" name="quality">
-                <option value="0" selected>Default (Format of the source)</option>
-                <option value="1">Audio (mp3)</option>
-                <option value="2">Audio (ogg)</option>
-                <option value="3">Audio (wav)</option>
-            </select>
-            <button type="button" name="button">Download</button>
-        </div>
+        <header>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="/">Advanced Downloader</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <section class="main">
+            <h3>Multi-Downloader</h3>
+
+            <section class="entrypoint">
+                <form id="download" action="" method="post">
+                    <input type="text" name="url" value="" placeholder="https://example.com/">
+
+                    <button class="button-primary" type="submit" name="button">Let's Go</button>
+                </form>
+            </section>
+
+            <h5>Video and Audio</h5>
+            <p>Download Video's and Audio from almost any website!</p>
+            <p>We support the following websites:</p>
+            <ul>
+                <li>youtube.com</li>
+                <li>soundcloud.com</li>
+                <li>vimeo.com</li>
+                <li>and many more!</li>
+            </ul>
+
+            <h5>Playlists</h5>
+            <p>You can also download entire playlists from the following sites:</p>
+            <ul>
+                <li>youtube.com</li>
+                <li>soundcloud.com</li>
+            </ul>
+        </section>
     </body>
 </html>
