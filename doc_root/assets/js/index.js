@@ -5,8 +5,8 @@ import Helpers from './Helpers.js'
 import Router from './Router.js'
 
 class EntryPoint {
-    _downloader = new Downloader(this);
     _error = new Error(this);
+    downloader = new Downloader(this);
     router = new Router(this);
 
     constructor() {
