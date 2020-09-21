@@ -39,7 +39,7 @@ class EntryPoint {
      * @private
      * @param {string} path
      */
-    _pathChange(path) {
+    async _pathChange(path) {
         switch (path) {
             case '/main': {
                 this._form = document.querySelector('form');
