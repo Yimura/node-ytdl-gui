@@ -80,6 +80,8 @@ class EntryPoint {
                 break;
             }
         }
+
+        delete this.router.activeClass;
     }
 
     /**
