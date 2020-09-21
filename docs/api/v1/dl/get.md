@@ -1,6 +1,6 @@
 # Download
 
-Used to collect a Token for a registered User.
+Used to get a downloadable stream from a website in the given format/type.
 
 **URL** : `/api/v1/dl/`
 
