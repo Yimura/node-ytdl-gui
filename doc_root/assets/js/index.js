@@ -1,8 +1,10 @@
+import API from './Api.js'
 import Download from './Download.js'
 import Downloader from './Downloader.js'
 import Error from './Error.js'
 import Helpers from './Helpers.js'
 import Router from './Router.js'
+import { CommonError } from './Constants.js'
 
 class EntryPoint {
     _error = new Error(this);
