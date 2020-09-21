@@ -48,11 +48,34 @@ class EntryPoint {
                 break;
             }
             case '/download': {
+                if (this.router.activeClass instanceof Download) break;
 
+                this.router.loading();
 
-                break;
-            }
-            case '/advanced': {
+                const url = this.router.query.get('url');
+
+                const res = await API.info(url);
+
+                if (res.ok) {
+                    const data = await res.json();
+
+                    const download = new Download(this, url, data);
+                    this.router.activeClass = download;
+
+                    await this.router.navigate('/#/download?url='+encodeURIComponent(url), 'Download your poison.');
+
+                    download.domLookup();
+
+                    break;
+                }
+
+                if (res.status === 403) {
+                    this.error(CommonError['BLOCKED_HOST']);
+
+                    break;
+                }
+
+                this.error('Unknown Error Occured!');
 
                 break;
             }
