@@ -93,14 +93,15 @@ class EntryPoint {
 
         const data = new FormData(this._form);
 
+        let url;
         try {
-            const url = new URL(data.get('url'));
-
-            this._downloader.prepare(url);
+            url = new URL(data.get('url'));
         }
         catch (e) {
             this.error('Invalid URL given, check if what you copied is correct and try again.');
         }
+
+        this.downloader.prepare(url);
 
         this._form.reset();
     }
