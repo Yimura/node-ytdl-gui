@@ -25,6 +25,10 @@ body {
     overflow: hidden;
 }
 
+form > * {
+    margin: 0;
+}
+
 /**
  * Nav Bar
  */
@@ -84,6 +88,8 @@ nav ul li a:hover {
     left: 50%;
     transform: translateX(-50%);
 
+    min-width: 500px;
+
     opacity: 0;
     animation: fadeOut 5s ease-out forwards;
 }
@@ -93,7 +99,7 @@ nav ul li a:hover {
 }
 
 /**
- * Main Content
+ * Content Wrapper
  */
 .main {
     width: 60vw;
@@ -106,6 +112,9 @@ nav ul li a:hover {
     letter-spacing: 1px;
 }
 
+/**
+ * Homepage
+ */
 .entrypoint {
     padding: 5vh 0;
 
@@ -114,14 +123,14 @@ nav ul li a:hover {
     box-shadow: inset 0 0 6px #0003;
 }
 
-#download {
+.entrypoint > form {
     display: flex;
 
     width: 40%;
     margin: 0 auto;
 }
 
-#download > input {
+.entrypoint > form > input {
     flex-grow: 1;
 
     border-radius: 4px 0 0 4px;
@@ -129,12 +138,17 @@ nav ul li a:hover {
     border-right: 0;
 }
 
-#download > button {
+.entrypoint > form > button {
     border-radius: 0 4px 4px 0;
 }
 
-form > * {
-    margin: 0;
+/**
+ * Download Page
+ */
+.track-info > img {
+    width: 100%;
+
+    border-radius: 25px;
 }
 
 /**
