@@ -44,9 +44,13 @@ export default class Router {
         return this.route;
     }
 
-    async prepare(path) {
+    loading() {
         // Loading Icon
         if (this._ready) this._m.main.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`;
+    }
+
+    async prepare(path) {
+        this.loading();
 
         path = this._getBasePath(path);
 
