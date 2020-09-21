@@ -8,16 +8,10 @@ export default class Router {
         this._m = entry;
     }
 
-    _getHash(path = null) {
-        const url = (path ? path : window.location.hash).split('?');
-
-        this.route = url[0].substr(1);
-        this.query = new URLSearchParams(url[1]);
-
-        return this.route;
-    }
-
-    async navigate(path = null, title = document.title) {
+    /**
+     * @param {string} path
+     */
+    _getBasePath(path) {
         if (path != null) {
             history.replaceState(null, '', path);
 
@@ -27,25 +21,49 @@ export default class Router {
 
         if (!path || path === '') {
             path = '/main';
-            title = 'Download Video/Audio from websites.';
         }
+        return path;
+    }
 
-        const filePath = `/assets/content${path}.html`;
+    /**
+     * @param {string} path
+     */
+    _getFilePath(path) {
+        return `/assets/content${path}.html`;
+    }
 
-        let content;
-        if (this._cache.has(filePath)) {
-            console.log('[ROUTER] Loaded content from cache.');
+    /**
+     * @param {string} [path=null]
+     */
+    _getHash(path = null) {
+        const url = (path ? path : window.location.hash).split('?');
 
-            content = this._cache.get(filePath);
-        }
-        else {
-            console.log('[ROUTER] Loading content from server.');
+        this.route = url[0].substr(1);
+        this.query = new URLSearchParams(url[1]);
 
+        return this.route;
+    }
+
+    async prepare(path) {
+        // Loading Icon
+        if (this._ready) this._m.main.innerHTML = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>`;
+
+        path = this._getBasePath(path);
+
+        const filePath = this._getFilePath(path);
+        if (!this._cache.has(filePath)) {
             const res = await Data.get(filePath);
 
-            content = await res.text();
-            this._cache.set(filePath, content);
+            this._cache.set(filePath, await res.text());
         }
+        return [path, filePath];
+    }
+
+    async navigate(path = null, title = document.title) {
+        let filePath;
+        [path, filePath] = await this.prepare(path);
+
+        let content = this._cache.get(filePath);
 
         if (!this._ready) return this._readyPath = { path, title };
 
