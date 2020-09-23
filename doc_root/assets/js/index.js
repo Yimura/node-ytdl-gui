@@ -3,6 +3,7 @@ import Download from './Download.js'
 import Downloader from './Downloader.js'
 import Error from './Error.js'
 import Helpers from './Helpers.js'
+import Playlist from './Playlist.js'
 import Router from './Router.js'
 import { CommonError } from './Constants.js'
 
@@ -77,7 +78,41 @@ class EntryPoint {
                     break;
                 }
 
-                this.error('Unknown Error Occured!');
+                this.error(CommonError['UNKNOWN']);
+
+                break;
+            }
+            case '/playlist': {
+                if (this.router.activeClass instanceof Playlist) break;
+
+                this.router.loading();
+
+                const url = this.router.query.get('url');
+
+                const res = await API.playlist(url);
+
+                if (res.ok) {
+                    const data = await res.json();
+
+                    const playlist = new Playlist(this, url, data);
+                    this.router.activeClass = playlist;
+
+                    await this.router.navigate('/#/playlist?url='+encodeURIComponent(url), 'Download a playlist.');
+
+                    playlist.domLookup();
+
+                    return;
+                }
+
+                if (res.status) {
+                    this.error(CommonError['BLOCKED_HOST']);
+
+                    return;
+                }
+
+                this.error(CommonError['UNKNOWN']);
+
+                return;
 
                 break;
             }
