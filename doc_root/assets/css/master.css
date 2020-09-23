@@ -29,6 +29,25 @@ form > * {
     margin: 0;
 }
 
+.scrollable {
+    height: calc(100vh - var(--nav-height));
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 1px;
+
+    background-color: var(--aqua-blue);
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 /**
  * Nav Bar
  */
@@ -149,6 +168,19 @@ nav ul li a:hover {
     width: 100%;
 
     border-radius: 25px;
+}
+
+/**
+ * Playlist Page
+ */
+.playlist-info {
+
+}
+
+.playlist-info .tracks img {
+    max-width: 150px;
+
+    border-radius: 5px;
 }
 
 /**
