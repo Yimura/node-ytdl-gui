@@ -20,6 +20,9 @@ export default class StaticServe extends BaseModule {
      * @param {Request} request
      */
     async _404Catch(request) {
+        // If the frontend is disabled in the settings we return as if no files were found.
+        if (!this.config.api.frontend) return false;
+
         // Last fallback if for some reason the request managed to slip by
         if (request.url.includes('/api/')) return false;
 
