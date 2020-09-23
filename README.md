@@ -6,6 +6,12 @@ Download YTDL supported Video's and convert them to audio if you want to.
  * NodeJS v14 or higher
  * ffmpeg in path
 
+### Minimum Hardware
+
+ * 1 CPU core (application will scale automatically)
+ * 40MB RAM (idle)
+ * 400MB RAM (when streaming a download)
+
 ## Setup
 
 ```sh
@@ -15,16 +21,13 @@ npm install
 ## Config
 
 For personal use one thread is what you're best off setting, as it is nearly impossible to use more than one.
-ffmpeg will is optimised to take advantage of multiple threads, so changing this setting will not affect ffmpeg.
+ffmpeg is optimised to take advantage of multiple threads, so changing this setting will not affect ffmpeg.
 
 ```js
 export default {
-    cluster: {
-        // By default, the webserver will be clustered in the same amount of Logical Cores available.
-        // You can overwrite the automated mode and set the amount of threads the webserver should use.
-        threads: 'auto' // a number is expected or "auto"
-    },
-    downloads: {
+    api: {
+        // If the frontend should be enabled, disable this when using your own frontend
+        frontend: true,
         sites: {
             // You can restrict from which domains people can download
             // There are two modes available "allow" and "deny".
@@ -33,6 +36,11 @@ export default {
             rule: 'allow', // allow or deny
             exception: ['vimeo.com']
         }
+    },
+    cluster: {
+        // By default, the webserver will be clustered in the same amount of Logical Cores available.
+        // You can overwrite the automated mode and set the amount of threads the webserver should use.
+        threads: 'auto' // a number is expected or "auto"
     },
     web: {
         // Change the port of the web server, don't change this for the docker container as you'll have to adapt it there as well.
