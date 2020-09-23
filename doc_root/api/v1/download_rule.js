@@ -9,7 +9,7 @@ export default class Info extends BasicEndpoint {
      * @param {Request} request
      */
     async get(request) {
-        const sites = this.config.downloads.sites;
+        const sites = this.config.api.sites;
 
         return request.accept(sites);
     }

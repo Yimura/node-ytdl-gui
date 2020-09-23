@@ -13,7 +13,7 @@ export default class Settings extends BaseModule {
      * @param {string} domain
      */
     isDomainOk(domain) {
-        const sites = this.config.downloads.sites;
+        const sites = this.config.api.sites;
 
         return sites.exception.includes(domain) ? sites.rule !== 'allow' : sites.rule === 'allow';
     }
