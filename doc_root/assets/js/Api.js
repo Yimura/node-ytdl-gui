@@ -40,7 +40,7 @@ export default class API {
      * @param {string} id
      * @returns {Promise<Response>} A YouTube playlist
      */
-    static playlist(id) {
-        return Data.get('/api/v1/playlist/', { id });
+    static playlist(url) {
+        return Data.get('/api/v1/playlist/', { url });
     }
 }
