@@ -1,12 +1,13 @@
 export default {
-    cluster: {
-        threads: 1
-    },
-    downloads: {
+    api: {
+        frontend: false,
         sites: {
             rule: 'allow',
             exception: []
         }
+    },
+    cluster: {
+        threads: 1
     },
     web: {
         port: 8080,
