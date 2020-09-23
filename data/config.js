@@ -1,13 +1,13 @@
 export default {
     api: {
-        frontend: false,
+        frontend: true,
         sites: {
             rule: 'allow',
             exception: []
         }
     },
     cluster: {
-        threads: 1
+        threads: 'auto'
     },
     web: {
         port: 8080,
