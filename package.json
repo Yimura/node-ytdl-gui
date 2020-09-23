@@ -13,6 +13,8 @@
   "dependencies": {
     "@yimura/import-dir": "^0.1.7",
     "fluent-ffmpeg": "^2.1.2",
-    "youtube-dl": "^3.0.2"
+    "mime": "^2.4.6",
+    "youtube-dl": "^3.0.2",
+    "ytpl": "^1.0.1"
   }
 }

@@ -2,113 +2,31 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Youtube DL</title>
+        <title>Download Video/Audio from websites.</title>
 
-        <style media="screen" type="text/css">
-            * {
-                box-sizing: border-box;
-            }
+        <link rel="stylesheet" href="assets/css/loader.css">
+        <link rel="stylesheet" href="assets/css/skeleton.min.css">
+        <link rel="stylesheet" href="assets/css/master.css">
 
-            html,
-            body {
-                font-family: -apple-system,
-                    BlinkMacSystemFont,
-                    "Segoe UI",
-                    Roboto,
-                    "Helvetica Neue",
-                    Arial,
-                    sans-serif;
-
-                width: 100vw;
-                height: 100vh;
-
-                overflow: hidden;
-            }
-
-            .center {
-                width: 35vh;
-
-                margin: 10vh auto 0;
-            }
-
-            input {
-                border: none;
-
-                border: 1px solid #e5e5e5;
-
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-            }
-
-            button {
-                cursor: pointer;
-
-                border: none;
-
-                width: 100%;
-                padding: 10px;
-
-                font-weigth: 700;
-
-                color: #252422;
-                background: #1e87f0;
-            }
-
-            label {
-                font-size: 0.9rem;
-            }
-            select {
-                display: block;
-
-                font-family: sans-serif;
-                font-weight: 700;
-
-                padding: 8px 15px;
-                width: 100%;
-                max-width: 100%;
-
-                border: 1px solid #e5e5e5;
-            }
-        </style>
-
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', () => {
-                const
-                    inputElement = document.querySelector('.center > input'),
-                    selectElement = document.querySelector('.center > select'),
-                    buttonElement = document.querySelector('.center > button');
-
-                buttonElement.addEventListener('click', function() {
-                    const
-                        dlUrl = `${window.location.origin}/api/v1/dl/?url=${encodeURIComponent(inputElement.value)}&type=${selectElement.value}`,
-                        dlElement = document.createElement('a');
-
-                    inputElement.value = '';
-
-                    dlElement.setAttribute('href', dlUrl);
-                    dlElement.setAttribute('hidden', '');
-
-                    document.querySelector('html').append(dlElement);
-
-                    dlElement.click();
-                    dlElement.remove();
-                });
-            });
-        </script>
+        <script src="assets/js/index.js" type="module" charset="utf-8"></script>
     </head>
     <body>
-        <div class="center">
-            <h1>YouTube downloader</h1>
-            <input type="text" value="" placeholder="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
-            <label for="quality">Select Download Type:</label>
-            <select class="" name="quality">
-                <option value="0" selected>Video (Best Available)</option>
-                <option value="1">Audio (mp3)</option>
-                <option value="2">Audio (ogg)</option>
-                <option value="3">Audio (wav)</option>
-            </select>
-            <button type="button" name="button">Download</button>
+        <header>
+            <nav class="routing">
+                <ul>
+                    <li>
+                        <a href="/" data-title="Download Video/Audio from websites.">Home</a>
+                    </li>
+                    <li>
+                        <a href="/#/advanced" data-title="Advanced Downloader">Advanced Downloader</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <div class="scrollable">
+            <section class="main">
+
+            </section>
         </div>
     </body>
 </html>

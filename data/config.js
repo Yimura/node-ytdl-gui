@@ -1,4 +1,11 @@
 export default {
+    api: {
+        frontend: true,
+        sites: {
+            rule: 'allow',
+            exception: []
+        }
+    },
     cluster: {
         threads: 'auto'
     },

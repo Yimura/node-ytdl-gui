@@ -39,6 +39,13 @@ export default class RESTRegistrar extends BaseModule {
     async _onRequest(request) {
         const instance = this._api.get(request.url);
         if (!instance) {
+            try {
+                if (typeof(this['404']) === 'function' && await this['404'](request)) return;
+            } catch (e) {
+                request.res.writeHead(500, {'Content-Type': 'text/plain'});
+                request.res.end(e.stack);
+            }
+
             request.res.writeHead(404, { 'Content-Type': 'text/html' });
             request.res.end('<pre>404 - Not Found<br><br>The requested URL was not found on this server.</pre>');
 
@@ -65,7 +72,7 @@ export default class RESTRegistrar extends BaseModule {
      * @private
      * @param {string} [parentBit=null] Defaults to an empty string
      */
-    async _recursiveRegister(bits, parentBit = '/') {
+    async _recursiveRegister(bits, parentBit = '/api/') {
         for (const bit in bits) {
             if (bits.hasOwnProperty(bit)) {
                 if (bits[bit] instanceof Promise) {
@@ -96,7 +103,7 @@ export default class RESTRegistrar extends BaseModule {
 
     async setup() {
         // This will require all commands within this directory
-        const rawApi = importDir(resolve('./doc_root/'), { recurse: true, noCache: true });
+        const rawApi = importDir(resolve('./doc_root/api/'), { recurse: true, noCache: true });
 
         /**
          * @type {Map}
