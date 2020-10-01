@@ -223,7 +223,16 @@ nav ul li a:hover {
         color: var(--white) !important;
     }
 
-    nav ul li a:hover {
+    nav ul li a:hover, button {
         color: var(--white);
+    }
+
+    button:focus, button:hover {
+        color: #888 !important;
+    }
+
+    button:active {
+        color: var(--aqua-blue) !important;
+        border-color: var(--aqua-blue) !important;
     }
 }
