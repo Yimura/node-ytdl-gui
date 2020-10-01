@@ -203,3 +203,27 @@ nav ul li a:hover {
         opacity: 0;
     }
 }
+
+/**
+ * Dark Mode
+ */
+ @media (prefers-color-scheme: dark) {
+    .logging {
+        background: var(--black);
+    }
+
+    body {
+        background-color: var(--black) !important;
+        color: var(--white) !important;
+    }
+
+    input[type="number"], input[type="date"], input[type="search"], input[type="text"], input[type="tel"], input[type="url"], input[type="password"], input[type="email"], select, textarea {
+        background-color: var(--light-grey) !important;
+        border: 1px solid var(--light-border) !important;
+        color: var(--white) !important;
+    }
+
+    nav ul li a:hover {
+        color: var(--white);
+    }
+}
