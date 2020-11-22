@@ -136,7 +136,8 @@ nav ul li a:hover {
  */
 .entrypoint {
     padding: 5vh 0;
-
+    margin: 0 -20vw 50px;
+    
     display: flex;
     align-content: center;
     justify-content: center;
@@ -146,7 +147,8 @@ nav ul li a:hover {
 
 .entrypoint > form {
     display: flex;
-
+    
+    min-width: 40%;
     margin: 0 auto;
 }
 
@@ -208,9 +210,13 @@ nav ul li a:hover {
 /**
  * Media queries
  */
-@media only screen and (max-width: 362px) {
+@media only screen and (max-width: 600px) {
     nav ul {
         margin: 0px;
         padding: 0px;
+    }
+    
+    .entrypoint > form {
+        min-width: 90%;
     }
 }
