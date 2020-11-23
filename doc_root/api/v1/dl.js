@@ -1,4 +1,5 @@
 import fs from 'fs'
+import mime from 'mime/lite.js'
 import { extname } from 'path'
 import ytdl from 'youtube-dl'
 
@@ -15,60 +16,37 @@ export default class Download extends BasicEndpoint {
     }
 
     /**
-     * @param {Request} request
-     * @param {fs.readableStream} stream
-     * @param {string} reason
-     */
-    _endStream(request, stream, reason) {
-        stream.destroy();
-        stream.removeAllListeners();
-
-        request.end(reason);
-    }
-
-    _replaceExtension(fileName, newExt) {
-        const ext = extname(fileName);
-        return fileName.replace(ext, newExt);
-    }
-
-    /**
-     * @param {JSON} headers
+     * @param {Object} headers
      * @param {number} type
-     * @param {fs.readableStream} stream
-     * @param {JSON} info
+     * @param {Object} info
      */
-    _processType(headers, type, stream, info) {
-        let contentType;
-        let fileName;
-        let fileSize;
+    _getHeadersAndFormat(headers, type, info) {
+        let contentType, fileName, fileSize, format;
 
         switch (type) {
             case 3: {
                 contentType = 'audio/wav';
                 fileName = this._replaceExtension(info._filename, '.wav');
-
-                stream = this.ffmpeg.toAudio(stream, 'wav');
+                format = 'wav';
 
                 break;
             }
             case 2: {
                 contentType = 'audio/ogg';
                 fileName = this._replaceExtension(info._filename, '.ogg');
-
-                stream = this.ffmpeg.toAudio(stream, 'ogg');
+                format = 'ogg';
 
                 break;
             }
             case 1: {
                 contentType = 'audio/mpeg';
                 fileName = this._replaceExtension(info._filename, '.mp3');
-
-                stream = this.ffmpeg.toAudio(stream);
+                format = 'mp3';
 
                 break;
             }
             default: {
-                contentType = 'video/mp4';
+                contentType = mime.getType(info._filename);
                 fileName = info._filename;
                 fileSize = info.size;
 
@@ -79,9 +57,14 @@ export default class Download extends BasicEndpoint {
         Object.assign(headers, {
             'Content-Type': contentType,
             'Content-Disposition': `attachment; filename=${fileName};`
-        }, fileSize !== undefined ?? { 'Content-Length': fileSize });
+        }, fileSize !== undefined ? { 'Content-Length': fileSize } : null);
 
-        return [stream, headers];
+        return [headers, format];
+    }
+
+    _replaceExtension(fileName, newExt) {
+        const ext = extname(fileName);
+        return fileName.replace(ext, newExt);
     }
 
     /**
@@ -95,46 +78,43 @@ export default class Download extends BasicEndpoint {
         }
 
         const url = data.get('url');
-        
+
         // Check if the host is allowed to be downloaded from, if not return 403
         const host = new URL(url).hostname;
         if (!this.getModule('settings').isDomainOk(host)) return request.reject(403);
 
         const type = parseInt(data.get('type')) || 0;
 
-        let stream;
+        let readableStream;
         try {
-            stream = ytdl(url);
+            readableStream = ytdl(url);
         }
         catch(err) {
             return request.reject(500, err.stack);
         }
 
-        stream.on('info', (info) => {
-            let headers;
-            [stream, headers] = this._processType(
-                request.webserver.getHeaders(request.req),
-                type,
-                stream,
-                info
-            );
+        readableStream.on('info', _ => {
+            const [headers, format] = this._getHeadersAndFormat(request.webserver.getHeaders(request.req), type, _);
 
             request.writeHead(200, headers);
-            stream.on('data', (data) => request.write(data));
-            stream.on('error', (err) => {
-                log.error('API_DL', 'Error occured with stream:', err);
 
-                this._endStream(request, stream, 'An error occured while getting the stream.');
-            });
-            stream.once('end', () => this._endStream(request, stream));
+            if (format) {
+                const ffmpeg = this.ffmpeg.toAudio(readableStream, request.res, format);
+
+                ffmpeg.on('error', (err) => {
+                    if (err.message === 'Output stream closed') return log.info('API_DL', 'Client closed the connection, ignoring "Ouput stream closed" error.');
+
+                    log.error('API_DL', 'Ffmpeg download error: ', err);
+                });
+
+                ffmpeg.run();
+
+                return;
+            }
+
+            readableStream.on('data', request.write.bind(request));
+            readableStream.on('end', request.end.bind(request));
         });
-
-        stream.on('error', (err) => {
-            log.error('API_DL', 'Error occured with stream:', err);
-
-            this._endStream(request, stream, 'An error occured while getting the stream.');
-        });
-        stream.once('end', () => this._endStream(request, stream));
 
         return true;
     }
