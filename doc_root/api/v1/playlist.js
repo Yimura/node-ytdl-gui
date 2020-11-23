@@ -1,5 +1,5 @@
 import BasicEndpoint from '../../../src/structures/endpoints/BasicEndpoint.js'
-import ytpl from 'ytpl'
+import ytpl from '@distube/ytpl'
 
 export default class Playlist extends BasicEndpoint {
     constructor(main) {

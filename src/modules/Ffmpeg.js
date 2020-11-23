@@ -10,11 +10,16 @@ export default class Ffmpeg extends BaseModule {
         });
     }
 
-    toAudio(stream, format = 'mp3') {
-        return ffmpeg(stream)
+    /**
+     * @param {stream.Readable} in
+     * @param {stream.Writable} out
+     * @param {string} format
+     */
+    toAudio(input, output, format = 'mp3') {
+        return ffmpeg(input)
+            .output(output)
             .format(format)
-            .noVideo()
-            .pipe();
+            .noVideo();
     }
 
     setup() {

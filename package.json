@@ -5,16 +5,16 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "docker build --tag ytdl:test_build . && docker rm ytdl -f && docker run --init --name ytdl -p 8080:8080 ytdl:test_build",
+    "start": "docker build --no-cache --tag ytdl:test_build . && docker rm ytdl -f && docker run --init --name ytdl -p 8080:8080 ytdl:test_build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Yimura",
   "license": "MIT",
   "dependencies": {
+    "@distube/ytpl": "^1.0.2",
     "@yimura/import-dir": "^0.1.7",
     "fluent-ffmpeg": "^2.1.2",
     "mime": "^2.4.6",
-    "youtube-dl": "^3.0.2",
-    "ytpl": "^1.0.1"
+    "youtube-dl": "^3.0.2"
   }
 }
