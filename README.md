@@ -40,7 +40,10 @@ export default {
     cluster: {
         // By default, the webserver will be clustered in the same amount of Logical Cores available.
         // You can overwrite the automated mode and set the amount of threads the webserver should use.
-        threads: 'auto' // a number is expected or "auto"
+        threads: 'auto', // a number is expected or "auto"
+
+        respawn: true, // Respawn workers whenever they crash
+        respawn_delay: 5e3 // The delay they are respawned on (in milliseconds)
     },
     web: {
         // Change the port of the web server, don't change this for the docker container as you'll have to adapt it there as well.
