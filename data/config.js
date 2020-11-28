@@ -7,10 +7,14 @@ export default {
         }
     },
     cluster: {
-        threads: 'auto'
+        threads: 'auto',
+
+        respawn: true,
+        respawn_delay: 5e3
     },
     web: {
         port: 8080,
+
         allow_headers: [
             'Authorization',
             'Access-Control-Allow-Headers',
