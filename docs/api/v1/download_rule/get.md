@@ -2,7 +2,9 @@
 
 Get the download rules of the YTDL host.
 
-**URL** : `/api/v1/download_rule/`
+**URL** : [`/api/v1/download_rule/`](https://ytdl.pieceof.art/api/v1/download_rule/)
+
+**Example URL** : `https://ytdl.pieceof.art/api/v1/download_rule/`
 
 **Method** : `GET`
 

@@ -1,8 +1,11 @@
 # Download
 
-Used to get a downloadable stream from a website in the given format/type.
+This endpoint does not return any JSON output but returns a downloadable stream.
+This endpoint neither supports resuming of streams when given specific bytes, make sure you download it in one go.
 
-**URL** : `/api/v1/dl/`
+**URL** : [`/api/v1/dl/`](https://ytdl.pieceof.art/api/v1/dl/?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D5NvUjGrwl_g&type=0)
+
+**Example URL** : `https://ytdl.pieceof.art/api/v1/dl/?url=<any url with a media stream>&type=0`
 
 **Method** : `GET`
 

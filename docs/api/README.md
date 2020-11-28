@@ -1,8 +1,8 @@
 # RESTAPIDocs
 
-This documentation example is written from the standpoint that your server is running under http://localhost:8080/. Modify your URL's accordingly when implementing your own interface.
+This documentation example is written from the standpoint that your server is running under http://ytdl.pieceof.art/. Modify your URL's accordingly when implementing your own interface.
 
-Currently the API is on its version, there will be no differentiation until a newer version is released.
+Currently the API is on its first revision, there will be no differentiation until a newer version is released.
 
 ## Open Endpoints
 

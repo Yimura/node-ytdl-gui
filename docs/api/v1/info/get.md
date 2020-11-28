@@ -2,7 +2,9 @@
 
 Get information about a URL from the YTDL binary on the server.
 
-**URL** : `/api/v1/info/`
+**URL** : [`/api/v1/info/`](https://ytdl.pieceof.art/api/v1/info/?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D5NvUjGrwl_g)
+
+**Example URL** : `https://ytdl.pieceof.art/api/v1/info/?url=<any url with a media stream>`
 
 **Method** : `GET`
 
