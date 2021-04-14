@@ -1,0 +1,7 @@
+version: "3.4"
+services:
+    ytdl:
+        container_name: ytdl
+        build: .
+        ports:
+            - 8080:8080
