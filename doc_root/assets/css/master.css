@@ -9,6 +9,9 @@
     --light-border: #bae8e85c;
 
     --nav-height: 56px;
+
+    --loader-color-light: #222;
+    --loader-color-dark: #eee; 
 }
 
 * {
@@ -261,6 +264,10 @@ nav ul li a:hover {
     button:active {
         color: var(--aqua-blue) !important;
         border-color: var(--aqua-blue) !important;
+    }
+
+    .lds-ring {
+        --loader-color: var(--loader-color-dark);
     }
 }
 
