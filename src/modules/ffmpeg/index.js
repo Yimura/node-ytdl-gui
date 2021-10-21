@@ -1,4 +1,4 @@
-import BaseModule from '../structures/modules/BaseModule.js'
+import BaseModule from './structures/BaseModule.js'
 import ffmpeg from 'fluent-ffmpeg'
 
 export default class Ffmpeg extends BaseModule {
@@ -20,9 +20,5 @@ export default class Ffmpeg extends BaseModule {
             .output(output)
             .format(format)
             .noVideo();
-    }
-
-    setup() {
-
     }
 }

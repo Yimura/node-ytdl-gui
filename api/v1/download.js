@@ -1,18 +1,15 @@
-import fs from 'fs'
+import Modules from '@/src/Modules.js'
 import mime from 'mime/lite.js'
 import { extname } from 'path'
 import ytdl from 'youtube-dl'
 
-import BasicEndpoint from '../../../src/structures/endpoints/BasicEndpoint.js'
-import log from '../../../src/util/Log.js'
-
-export default class Download extends BasicEndpoint {
+export default class Download extends Modules.REST.Route {
     constructor(main) {
         super(main);
     }
 
-    get ffmpeg() {
-        return this.getModule('ffmpeg');
+    get route() {
+        return '/dl';
     }
 
     /**
@@ -71,19 +68,18 @@ export default class Download extends BasicEndpoint {
      * @param {Request} request
      */
     async get(request) {
-        const data = request.query;
+        const searchParams = new URLSearchParams(request.searchParams);
 
-        if (!data.get('url')) {
+        const url = searchParams.get('url');
+        if (!url) {
             return request.reject(400);
         }
 
-        const url = data.get('url');
-
         // Check if the host is allowed to be downloaded from, if not return 403
         const host = new URL(url).hostname;
-        if (!this.getModule('settings').isDomainOk(host)) return request.reject(403);
+        if (!this.modules.settings.isDomainOk(host)) return request.reject(403);
 
-        const type = parseInt(data.get('type')) || 0;
+        const type = parseInt(searchParams.get('type')) || 0;
 
         let readableStream;
         try {
@@ -99,12 +95,12 @@ export default class Download extends BasicEndpoint {
             request.writeHead(200, headers);
 
             if (format) {
-                const ffmpeg = this.ffmpeg.toAudio(readableStream, request.res, format);
+                const ffmpeg = this.modules.ffmpeg.toAudio(readableStream, request.res, format);
 
                 ffmpeg.on('error', (err) => {
-                    if (err.message === 'Output stream closed') return log.info('API_DL', 'Client closed the connection, ignoring "Ouput stream closed" error.');
+                    if (err.message === 'Output stream closed') return this.log.info('API_DL', 'Client closed the connection, ignoring "Ouput stream closed" error.');
 
-                    log.error('API_DL', 'Ffmpeg download error: ', err);
+                    this.log.error('API_DL', 'Ffmpeg download error: ', err);
                 });
 
                 ffmpeg.run();
@@ -113,6 +109,11 @@ export default class Download extends BasicEndpoint {
             }
 
             readableStream.on('data', request.write.bind(request));
+            readableStream.on('error', (e) => {
+                this.log.error('API_DL', 'Error while piping stream:', e);
+                
+                request.end();
+            });
             readableStream.on('end', request.end.bind(request));
         });
 

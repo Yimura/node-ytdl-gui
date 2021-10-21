@@ -9,7 +9,7 @@ export default {
     cluster: {
         threads: 'auto'
     },
-    web: {
+    webserver: {
         port: 8080,
         allow_headers: [
             'Authorization',

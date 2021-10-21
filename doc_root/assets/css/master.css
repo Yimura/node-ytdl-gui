@@ -237,7 +237,7 @@ nav ul li a:hover {
 /**
  * Dark Mode
  */
- @media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     .logging {
         background: var(--black);
     }

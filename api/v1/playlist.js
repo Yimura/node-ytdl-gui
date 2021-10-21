@@ -1,9 +1,13 @@
-import BasicEndpoint from '../../../src/structures/endpoints/BasicEndpoint.js'
+import Modules from '@/src/Modules.js'
 import ytpl from '@distube/ytpl'
 
-export default class Playlist extends BasicEndpoint {
+export default class Playlist extends Modules.REST.Route {
     constructor(main) {
         super(main);
+    }
+
+    get route() {
+        return '/playlist';
     }
 
     /**
@@ -11,21 +15,17 @@ export default class Playlist extends BasicEndpoint {
      * @param {string} host
      * @param {string} url
      */
-    async _getPlaylistData(host, url) {
+    _getPlaylistData(host, url) {
         switch (host) {
             case 'www.youtube.com': {
                 const id = new URLSearchParams(new URL(url).search).get('list');
                 if (!id) return null;
 
-                let data;
-
                 try {
-                    data = await ytpl(url);
+                    return ytpl(url);
                 } catch (e) {
                     return {};
                 }
-
-                return data;
             }
             default: {
                 return {};
@@ -37,11 +37,12 @@ export default class Playlist extends BasicEndpoint {
      * @param {Request} request
      */
     async get(request) {
-        const url = request.query.get('url');
+        const searchParams = new URLSearchParams(request.searchParams);
+        const url = searchParams.get('url');
         if (!url) return request.reject(400);
 
         const host = new URL(url).hostname;
-        if (!this.getModule('settings').isDomainOk(host)) return request.reject(403);
+        if (!this.modules.settings.isDomainOk(host)) return request.reject(403);
 
         const data = await this._getPlaylistData(host, url);
 

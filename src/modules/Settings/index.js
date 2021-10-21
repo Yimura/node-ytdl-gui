@@ -1,4 +1,4 @@
-import BaseModule from '../structures/modules/BaseModule.js'
+import BaseModule from './structures/BaseModule.js'
 
 export default class Settings extends BaseModule {
     constructor(main) {
@@ -16,9 +16,5 @@ export default class Settings extends BaseModule {
         const sites = this.config.api.sites;
 
         return sites.exception.includes(domain) ? sites.rule !== 'allow' : sites.rule === 'allow';
-    }
-
-    setup() {
-
     }
 }
