@@ -1,23 +1,28 @@
-import ModuleManager from './manager/ModuleManager.js'
-import config from '../data/config.js'
+import Modules from './Modules.js'
+import config from '@/data/config.js'
 import cluster from 'cluster'
-import { cpus } from 'os'
 import log from './util/Log.js'
+import { cpus } from 'os'
+import { resolve } from 'path'
 
 export default class Main {
-    moduleManager = new ModuleManager(this);
-
     constructor() {
-        Object.assign(this, {
-            config
-        });
+        
     }
 
-    getModule(moduleName) {
-        return this.moduleManager.get(moduleName);
+    get config() {
+        return config;
     }
 
-    start() {
+    get log() {
+        return log;
+    }
+
+    get modules() {
+        return Modules;
+    }
+
+    async start() {
         if (cluster.isMaster) {
             log.info('MASTER', `Master Cluster is started on PID ${process.pid}`);
 
@@ -35,13 +40,17 @@ export default class Main {
 
         log.info('SLAVE', `Slave started on PID ${process.pid}`);
 
-        this.moduleManager.load();
+        await Modules.load(this, resolve('./src/modules'));
     }
 
     /**
      * Cleanup everything nicely
      */
-    exit() {
+    async exit() {
+        log.verbose("MAIN", "Received close signal.");
+
+        await Modules.cleanup();
+
         process.exit(0);
     }
 }

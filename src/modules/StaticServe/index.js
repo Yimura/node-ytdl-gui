@@ -1,4 +1,4 @@
-import BaseModule from '../structures/modules/BaseModule.js'
+import BaseModule from './structures/BaseModule.js'
 import path from 'path'
 import fs from 'fs'
 import mime from 'mime/lite.js'
@@ -8,9 +8,9 @@ export default class StaticServe extends BaseModule {
         super(main);
 
         this.register(StaticServe, {
-            name: 'static',
+            name: 'StaticServe',
             requires: [
-                'rest'
+                'REST'
             ]
         });
     }
@@ -23,10 +23,7 @@ export default class StaticServe extends BaseModule {
         // If the frontend is disabled in the settings we return as if no files were found.
         if (!this.config.api.frontend) return false;
 
-        // Last fallback if for some reason the request managed to slip by
-        if (request.url.includes('/api/')) return false;
-
-        const filepath = path.resolve(`./doc_root${request.url === '/' ? '/index.html' : request.originalUrl}`);
+        const filepath = path.resolve(`./doc_root${request.url === '' ? '/index.html' : request.url}`);
 
         if (!await this._isReadable(filepath)) return false;
 
@@ -34,9 +31,7 @@ export default class StaticServe extends BaseModule {
         if (!mimeType) return false;
 
         request.writeHead(200, { 'Content-Type': mimeType });
-        fs.readFile(filepath, (err, data) => {
-            request.end(data);
-        });
+        fs.readFile(filepath, (err, data) => request.end(data));
 
         return true;
     }
@@ -54,7 +49,11 @@ export default class StaticServe extends BaseModule {
         });
     }
 
-    setup() {
-        this.getModule('rest')['404'] = (...args) => this._404Catch(...args);
+    init() {
+        this.log.verbose('STATIC_SERVE', "Init");
+
+        this.modules.REST.registerErrorHandler("404", this._404Catch.bind(this));
+
+        return true;
     }
 }

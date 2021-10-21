@@ -1,8 +1,12 @@
-import BasicEndpoint from '../../../src/structures/endpoints/BasicEndpoint.js'
+import Modules from '@/src/Modules.js'
 
-export default class Info extends BasicEndpoint {
+export default class Info extends Modules.REST.Route {
     constructor(main) {
         super(main);
+    }
+
+    get route() {
+        return '/download_rule';
     }
 
     /**

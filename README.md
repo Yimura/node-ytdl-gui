@@ -4,7 +4,7 @@ Download YTDL supported Video's and convert them to audio if you want to.
 ## Requirements
 
  * NodeJS v14 or higher
- * ffmpeg in path
+ * ffmpeg and python in path
 
 ### Minimum Hardware
 
@@ -42,7 +42,7 @@ export default {
         // You can overwrite the automated mode and set the amount of threads the webserver should use.
         threads: 'auto' // a number is expected or "auto"
     },
-    web: {
+    webserver: {
         // Change the port of the web server, don't change this for the docker container as you'll have to adapt it there as well.
         port: 8080,
 

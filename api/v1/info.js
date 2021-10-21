@@ -1,9 +1,13 @@
-import BasicEndpoint from '../../../src/structures/endpoints/BasicEndpoint.js'
+import Modules from '@/src/Modules.js'
 import ytdl from 'youtube-dl'
 
-export default class Info extends BasicEndpoint {
+export default class Info extends Modules.REST.Route {
     constructor(main) {
         super(main);
+    }
+
+    get route() {
+        return '/info';
     }
 
     /**
@@ -23,11 +27,12 @@ export default class Info extends BasicEndpoint {
      * @param {Request} request
      */
     async get(request) {
-        const url = request.query.get('url');
+        const searchParams = new URLSearchParams(request.searchParams);
+        const url = searchParams.get('url');
         if (!url) return request.reject(400);
 
         const host = new URL(url).hostname;
-        if (!this.getModule('settings').isDomainOk(host)) return request.reject(403);
+        if (!this.modules.settings.isDomainOk(host)) return request.reject(403);
 
         return request.accept(await this.getInfo(url));
     }

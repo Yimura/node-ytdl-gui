@@ -3,7 +3,6 @@ import Main from './src/Main.js'
 const main = new Main();
 main.start();
 
-process.on('SIGINT', () => main.exit());
-process.on('SIGTERM', () => main.exit());
+['beforeExit', 'SIGUSR1', 'SIGUSR2', 'SIGINT', 'SIGTERM'].map(_ => process.once(_, main.exit.bind(main)));
 
-process.on('unhandledRejection', console.log);
+process.on('unhandledRejection', (e) => main.log.error('PROCESS', 'Unhandled error:', e));

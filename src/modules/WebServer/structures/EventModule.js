@@ -1,21 +1,29 @@
-import { EventEmitter } from 'events'
+import { EventEmitter } from 'events';
 
-export default class EventModule extends EventEmitter {
+export default class BaseModule extends EventEmitter {
     /**
      * @param {Main} main
      */
     constructor(main) {
         super();
 
-        this.main = main;
+        this._m = main;
     }
 
     get config() {
-        return this.main.config;
+        return this._m.config;
+    }
+
+    get log() {
+        return this._m.log;
+    }
+
+    get modules() {
+        return this._m.modules;
     }
 
     /**
-     * @param {JSON} object
+     * @param {Object} object
      * @param {boolean} internal If this is the raw register object
      */
     register(instance, object, internal = true) {
@@ -32,9 +40,5 @@ export default class EventModule extends EventEmitter {
         else if (this.rawData) {
             Object.assign(this.rawData, object);
         }
-    }
-
-    getModule(moduleName) {
-        return this.main.moduleManager.get(moduleName);
     }
 }

@@ -1,6 +1,6 @@
 {
   "name": "ytdl-web-gui",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "API endpoint that returns a stream url",
   "main": "index.js",
   "type": "module",
@@ -11,10 +11,10 @@
   "author": "Yimura",
   "license": "MIT",
   "dependencies": {
-    "@distube/ytpl": "^1.0.2",
-    "@yimura/import-dir": "^0.1.7",
+    "@distube/ytpl": "^1.1.1",
+    "@yimura/import-dir": "^0.1.12",
     "fluent-ffmpeg": "^2.1.2",
-    "mime": "^2.4.6",
+    "mime": "^2.5.2",
     "youtube-dl": "^3.0.2"
   }
 }
